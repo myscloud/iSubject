@@ -1,0 +1,274 @@
+body{
+	background-color: #d9f3ff;
+}
+.logo{
+	position: fixed;
+	height: 100px;
+}
+.navbar-default .navbar-text{
+	float : right;
+	color : #8f8f8f;
+	font-weight: bold;
+	height: 80px;
+	width: 300px;
+	background-color: #d9f3ff;
+	border-radius: 10px;
+	margin-top: 5px;
+	
+}
+.navbar-default .navbar-link{
+	color :#8f8f8f;
+}
+.navbar-default .container{
+	height : 100px;
+}
+a:hover { 
+	text-decoration: none;
+	color:#8f8f8f;
+}
+.body{
+	position:relative;
+	margin-top :120px;
+	margin-left: 20px;
+	z-index: 1;
+	padding-bottom: 100px;
+}
+.search-subj{
+	width: 300px;
+}
+.search-rslt{
+	padding-top: 10px;
+	padding-left:20px; 
+	font-size: 18px;
+}
+.panel-footer{
+	text-align: right;
+}
+.navbar-fixed-bottom{
+	min-height: 30px;
+	height: 30px;
+	text-align: center;
+}
+.navbar-fixed-top{
+	background-color: #a3e1ff;
+	height: 100px;
+}
+.username-in{
+	border : 2px solid #eeeeee;
+	border-radius: 10px;
+	padding: 10px 10px 10px 10px;
+	position:fixed;
+	width :350px;
+	top :50%;
+	left :50%;
+	margin-left: -160px;
+	margin-top: -140px;	
+	background-color: #eeeeee;
+}
+.login-feild{
+	width: 300px;
+}
+.login-submit{
+	float:right;
+}
+.addUser-submit{
+	float: right;
+}
+
+
+
+
+.sectionComment-feild{
+	width: 100px;
+}
+.semesterComment-feild{
+	width: 100px;
+}
+.academicYearComment-feild{
+	width: 100px;
+}
+.searchComment{
+	float:right;
+}
+a{
+	text-decoration: none;
+	color: #333;
+}
+.chooseSec{
+	width: 100px;
+}
+
+/*global*/
+/*-------------------------------------*/
+.panel-heading,.panel-default>.panel-heading{
+	background-color: #a3e1ff;
+
+}
+.panel-title{
+	color: #8f8f8f;
+	font-weight: bold;
+	font-size: 20px;
+}
+.panel.panel-default{
+	border: 2px solid gray;
+
+}
+.list-group{
+	border: 2px solid gray;
+	border-radius:7px; 
+}
+
+
+
+
+
+/*Admin*/
+
+/*addStudent*/
+/*-------------------------------------*/
+.addStudent-courseId-feild,
+.addStudent-sectionNo-feild,
+.addStudent-semester-feild,
+.addStudent-year-feild,
+.addStudent-studentId-feild{
+	width : 300px;
+}
+.addStudent-submit{
+}
+
+/*addCourse*/
+/*-------------------------------------*/
+.addCourse-courseId-feild,
+.addCourse-courseName-feild,
+.addCourse-courseMajor-feild,
+.addCourse-courseDescription-feild{
+	width :300px;
+}
+.addCourse-submit{
+}
+
+/*addEvent*/
+/*-------------------------------------*/
+.addEvent-courseId-feild,
+.addEvent-eventName-feild,
+.addEvent-eventDescription-feild,
+.addEvent-semester-feild,
+.addEvent-year-feild{
+	width :300px;
+}
+.addEvent-submit{
+	float: right;
+}
+
+/*addSection*/
+/*-------------------------------------*/
+.addSection-submit{
+	float:right;
+}
+.addSection-courseId-feild,
+.addSection-sectionNo-feild,
+.addSection-year-feild,
+.addSection-semester-feild,
+.addSection-room-feild,
+.addSection-teacher-feild{
+	width:300px;
+}
+
+/*updateStatus*/
+/*------------------------------------*/
+.updateStatus-studentId-feild{
+	width: 300px;
+}
+.updateStatus-submit{
+	float:right;
+}
+
+/*updateSection*/
+/*------------------------------------*/
+.updateSection-courseId-feild,
+.updateSection-sectionNo-feild,
+.updateSection-studentId-feild{
+	width:300px;
+}
+.updateSection-submit{
+	float :right;
+}
+
+
+
+
+
+/*User*/
+
+/*alumnusComment*/
+/*------------------------------------*/
+.alumnusComment-submit{
+	float: right;
+}
+
+/*calendar*/
+/*------------------------------------*/
+.panel.panel-default.calendar{
+	width:80%;
+}
+
+/*courseDetail*/
+/*------------------------------------*/
+.courseDetail-favorite-button{
+	float:right;
+}
+.courseDetail-courseId-feild,
+.courseDetail-courseName-feild,
+.courseDetail-description-feild,
+.courseDetail-comment-feild,
+.courseDetail-occupation-feild,
+.courseDetail-section-dropdown{
+	padding-top: 20px;
+	padding-bottom: 20px;
+	text-decoration: none;
+}
+
+/*addComment*/
+/*-----------------------------------*/
+.addComment-semester-feild,
+.addComment-year-feild{
+	width: 300px;
+}
+
+/*Profile*/
+/*------------------------------------*/
+.profile-id-feild,
+.profile-name-feild,
+.profile-address-feild,
+.profile-major-feild,
+.profile-gpax-feild,
+.profile-room-feild,
+.profile-position-feild,
+.profile-skill-feild,
+.profile-occupation-feild{
+	padding-top: 20px;
+	padding-bottom: 20px;
+	text-decoration: none;
+}
+
+/*addEvent*/
+/*-------------------------------------*/
+.addEventU-courseId-feild,
+.addEventU-sectionNo-feild,
+.addEventU-eventName-feild,
+.addEventU-description-feild,
+.addEventU-semester-feild,
+.addEventU-year-feild{
+	width :300px;
+}
+.addEventU-submit{
+	float: right;
+}
+
+/*password*/
+/*------------------------------------*/
+.password-oldPassword-feild,
+.password-newPassword-feild,
+.password-reNewPassword-feild{
+	width: 300px;
+}
