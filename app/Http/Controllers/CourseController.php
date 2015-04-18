@@ -103,10 +103,6 @@ class CourseController extends Controller {
 		return View::make('pages.user.search')->with('result', $result);
 	}
 
-	public function showCourseList(){
-
-	}
-
 	public function showCurrentCourseList(){
 		$c_month = date('m');
 		$c_year = date('Y');
@@ -119,7 +115,21 @@ class CourseController extends Controller {
 		$user_id = Auth::user()->id;
 		$query = "SELECT DISTINCT COURSE.course_id, COURSE.course_name, COURSE.course_des FROM COURSE INNER JOIN REGISTRATION ON REGISTRATION.reg_course = COURSE.course_id AND REGISTRATION.reg_year = $c_year AND REGISTRATION.reg_semester = $c_semester AND REGISTRATION.reg_student = '$user_id'";
 		$result = DB::select(DB::raw($query));
-		return View::make('pages.user.courseList')->with('result', $result);
+		return View::make('pages.user.courseList')->with('result', $result)->with('page_type', 'current');
+	}
+
+	public function showAllRegisteredCourse(){
+		$user_id = Auth::user()->id;
+		$query = "SELECT DISTINCT COURSE.course_id, COURSE.course_name, COURSE.course_des FROM COURSE INNER JOIN REGISTRATION ON REGISTRATION.reg_course = COURSE.course_id AND REGISTRATION.reg_student = '$user_id'";
+		$result = DB::select(DB::raw($query));
+		return View::make('pages.user.courseList')->with('result', $result)->with('page_type', 'all');
+	}
+
+	public function showFavCourse(){
+		$user_id = Auth::user()->id;
+		$query = "SELECT DISTINCT COURSE.course_id, COURSE.course_name, COURSE.course_des FROM COURSE INNER JOIN FAV_COURSE ON FAV_COURSE.fav_course_id = COURSE.course_id AND FAV_COURSE.student_id = '$user_id'";
+		$result = DB::select(DB::raw($query));
+		return View::make('pages.user.courseList')->with('result', $result)->with('page_type', 'fav');
 	}
 
 	//-------------------------validation function-------------------------

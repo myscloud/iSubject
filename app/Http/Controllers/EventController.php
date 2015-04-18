@@ -78,6 +78,10 @@ class EventController extends Controller {
 		return redirect('addEvent');
 	}
 
+	public function showCalendar(){
+		return View::make('pages.user.calendar');
+	}
+
 	//-------------------------validation function-------------------------
 	
 	public function existSomeSections($course, $year, $semester){
