@@ -16,7 +16,7 @@
 	<h3 class="panel-title">Welcome</h3>
 </div>
 <div class="panel-body">
-	XXXXXXXXX
+	Welcome to iSubject admin page!
 </div>
 
 

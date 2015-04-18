@@ -20,7 +20,7 @@
 	<div>
 		<nav class="navbar navbar-default navbar-fixed-top" >
 			<div class="container" >
-				<div class ="animated bounceInLeft"><a href="{{ URL::to('/') }}"><img src ="{{asset('/img/banner.png')}}" class="logo" /></a>
+				<div class ="animated bounceInLeft"><a href="{{ URL::to('admin') }}"><img src ="{{asset('/img/banner.png')}}" class="logo" /></a>
 				</div>
 				
 				<div class = "animated bounceInRight">
