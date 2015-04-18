@@ -30,8 +30,8 @@
 				<div class = "animated bounceInRight">
 
 					<div class="navbar-text">
-					&nbsp &nbsp ID.    <br>
-						&nbsp &nbsp Name : &nbsp  <br>
+					&nbsp &nbsp ID.  {{ Auth::user()->id }}  <br>
+						&nbsp &nbsp Name : &nbsp{{Auth::user()->first_name}} {{Auth::user()->last_name}}  <br>
 						&nbsp &nbsp <a href="{{ URL::to('/') }}" class="navbar-link">[ Log out ]</a>
 					</div>
 

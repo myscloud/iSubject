@@ -27,7 +27,7 @@
 
 					<div class="navbar-text">
 					&nbsp &nbsp Admin   <br>
-						&nbsp &nbsp Name :   &nbsp &nbsp  <br>
+						&nbsp &nbsp Name : &nbsp{{Auth::user()->first_name}} {{Auth::user()->last_name}}  <br>
 						&nbsp &nbsp <a href="{{ URL::to('/') }}" class="navbar-link">[ Log out ]</a>
 					</div>
 
@@ -57,7 +57,5 @@
 		</div>
 	</nav>
 
-	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-	<script src="js/bootstrap.js"></script>
 </body>
 </html>

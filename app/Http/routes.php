@@ -21,7 +21,6 @@ Route::get('courseList','CourseController@showCurrentCourseList');
 Route::get('login', 'AdminController@login');
 Route::get('admin','AdminController@admin');
 Route::get('addUser','AdminController@adminAdd');
-Route::get('updateStatus','AdminController@updateStatus');
 Route::get('addStudent','AdminController@addStudent');
 Route::get('addCourse','AdminController@addCourse');
 Route::get('addSection','AdminController@addSection');
@@ -47,4 +46,8 @@ Route::get('addEventU','StudentController@addEvent');
 Route::get('sectionDetail','StudentController@sectionDetail');
 
 Route::get('addUser/{user_type}', 'UserController@addUserByType');
+Route::get('updateStatus','AdminController@updateStatus');
 Route::post('addUser/student', 'UserController@addStudent');
+Route::post('addUser/teacher', 'UserController@addTeacher');
+Route::post('addUser/admin', 'UserController@addAdmin');
+Route::post('updateStatus','UserController@updateUserStatus');

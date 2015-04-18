@@ -33,11 +33,6 @@ a:hover {
 	z-index: 1;
 	padding-bottom: 100px;
 }
-.courseDesAtt{
-	padding-top: 20px;
-	padding-bottom: 20px;
-	text-decoration: none;
-}
 .search-subj{
 	width: 300px;
 }
@@ -99,12 +94,11 @@ a{
 	text-decoration: none;
 	color: #333;
 }
-
-
 .chooseSec{
 	width: 100px;
 }
 
+/*global*/
 /*-------------------------------------*/
 .panel-heading,.panel-default>.panel-heading{
 	background-color: #a3e1ff;
@@ -125,6 +119,10 @@ a{
 }
 
 
+
+
+
+/*Admin*/
 
 /*addStudent*/
 /*-------------------------------------*/
@@ -186,7 +184,7 @@ a{
 }
 
 /*updateSection*/
-/*-----------------------------------*/
+/*------------------------------------*/
 .updateSection-courseId-feild,
 .updateSection-sectionNo-feild,
 .updateSection-studentId-feild{
@@ -194,4 +192,83 @@ a{
 }
 .updateSection-submit{
 	float :right;
+}
+
+
+
+
+
+/*User*/
+
+/*alumnusComment*/
+/*------------------------------------*/
+.alumnusComment-submit{
+	float: right;
+}
+
+/*calendar*/
+/*------------------------------------*/
+.panel.panel-default.calendar{
+	width:80%;
+}
+
+/*courseDetail*/
+/*------------------------------------*/
+.courseDetail-favorite-button{
+	float:right;
+}
+.courseDetail-courseId-feild,
+.courseDetail-courseName-feild,
+.courseDetail-description-feild,
+.courseDetail-comment-feild,
+.courseDetail-occupation-feild,
+.courseDetail-section-dropdown{
+	padding-top: 20px;
+	padding-bottom: 20px;
+	text-decoration: none;
+}
+
+/*addComment*/
+/*-----------------------------------*/
+.addComment-semester-feild,
+.addComment-year-feild{
+	width: 300px;
+}
+
+/*Profile*/
+/*------------------------------------*/
+.profile-id-feild,
+.profile-name-feild,
+.profile-address-feild,
+.profile-major-feild,
+.profile-gpax-feild,
+.profile-room-feild,
+.profile-position-feild,
+.profile-skill-feild,
+.profile-occupation-feild{
+	padding-top: 20px;
+	padding-bottom: 20px;
+	text-decoration: none;
+}
+
+/*addEvent*/
+/*-------------------------------------*/
+.addEventU-courseId-feild,
+.addEventU-sectionNo-feild,
+.addEventU-eventName-feild,
+.addEventU-description-feild,
+.addEventU-semester-feild,
+.addEventU-year-feild{
+	width :300px;
+}
+.addEventU-submit{
+	float: right;
+}
+
+/*password*/
+/*------------------------------------*/
+.password-oldPassword-feild,
+.password-newPassword-feild,
+.password-reNewPassword-feild{
+	width: 300px;
 }
