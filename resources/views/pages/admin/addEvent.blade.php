@@ -17,7 +17,8 @@
 </div>
 <div class="panel-body">
 
-
+<form method="post" action="/addEventAdmin">
+	<input name="_token" hidden value="{!! csrf_token() !!}" />
 	<div class="row">
 		<div class="col-md-6">
 			<br>
@@ -32,9 +33,9 @@
 			<div class ="addEvent-sectionNo-feild">
 				<div class="row" >
 
-					<div class="col-md-1"><input name="radioChoose" type="radio" value="" /></div>
+					<div class="col-md-1"><input name="radioChoose" type="radio" value="all" /></div>
 					<div class="col-md-3">All section</div>
-					<div class="col-md-1"><input name="radioChoose" type="radio" value="" /></div>
+					<div class="col-md-1"><input name="radioChoose" type="radio" value="some" /></div>
 					<div class="col-md-7"><input type="text" name="chooseSec" class="chooseSec" placeholder="  ....." /></div>
 				</div>
 			</div>
@@ -45,13 +46,13 @@
 		<div class="col-md-6">
 			<br>
 			<div class ="addEvent-eventName-feild">
-				Event name : <br><input type="text" class="form-control" placeholder="Event name" aria-describedby="basic-addon2" name ="std_id">
+				Event name : <br><input type="text" class="form-control" placeholder="Event name" aria-describedby="basic-addon2" name ="event_name">
 			</div>
 		</div>
 		<div class="col-md-6">
 			<br>
 			<div class ="addEvent-eventDescription-feild">
-				Description : <br><input type="text" class="form-control" placeholder="Description" aria-describedby="basic-addon2" name ="std_id">
+				Description : <br><input type="text" class="form-control" placeholder="Description" aria-describedby="basic-addon2" name ="event_des">
 			</div>
 		</div>			
 	</div>
@@ -59,17 +60,19 @@
 	<div class="row">
 		<div class="col-md-6">
 			<br>
-			<div class ="addEvent-semester-feild">
-				Semester : <input type="text" class="form-control" placeholder="semester" aria-describedby="basic-addon2" name="semester">
+			<div class ="addEvent-year-feild">
+				Academic Year : <input type="text" class="form-control" placeholder="Academic Year" aria-describedby="basic-addon2" name="year">
 			</div>
-		</div>
+		</div>	
 		<div class="col-md-6">
 			<br>
-			<div class ="addEvent-year-feild">
-				Academic Year : <input type="text" class="form-control" placeholder="academic Year" aria-describedby="basic-addon2" name="year">
+			<div class ="addEvent-semester-feild">
+				Semester : <input type="text" class="form-control" placeholder="Semester" aria-describedby="basic-addon2" name="semester">
 			</div>
-		</div>			
+		</div>		
 	</div>
+	<br>
+	<input type="checkbox" name="homework" value="1"> Homework<br>
 	<br>
 	Start :<br>
 	<input type="date" name="startDate"><input type="time" name="startTime">
@@ -79,7 +82,8 @@
 	<br>
 	<br>
 	<div class ="addEvent-submit">
-		<button type="button" class="btn btn-success">Submit</button>
+		<input type="submit" class="btn btn-success" value="submit">
 	</div>
+</form>
 </div>
 @stop

@@ -35,14 +35,14 @@
 		<div class="row">
 			<div class="col-md-6">
 				<br>
-				<div class ="addSection-semester-feild">
-					Semester : <input type="text" class="form-control" placeholder="semester" aria-describedby="basic-addon2" name="semester">
+				<div class ="addSection-year-feild">
+					Academic Year : <input type="text" class="form-control" placeholder="Academic Year" aria-describedby="basic-addon2" name="year">
 				</div>
 			</div>
 			<div class="col-md-6">
 				<br>
-				<div class ="addSection-year-feild">
-					Academic Year : <input type="text" class="form-control" placeholder="academic Year" aria-describedby="basic-addon2" name="year">
+				<div class ="addSection-semester-feild">
+					Semester : <input type="text" class="form-control" placeholder="Semester" aria-describedby="basic-addon2" name="semester">
 				</div>
 			</div>			
 		</div>

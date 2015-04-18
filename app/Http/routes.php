@@ -51,3 +51,4 @@ Route::post('addUser/student', 'UserController@addStudent');
 Route::post('addUser/teacher', 'UserController@addTeacher');
 Route::post('addUser/admin', 'UserController@addAdmin');
 Route::post('updateStatus','UserController@updateUserStatus');
+Route::post('addEventAdmin', 'EventController@addEventAdmin');

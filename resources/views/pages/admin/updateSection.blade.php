@@ -14,7 +14,7 @@
 <form method="post" action="/editStudentInCourse">
 	<input name="_token" hidden value="{!! csrf_token() !!}" />
 	<div class="panel-heading">
-		<h3 class="panel-title">Update section</h3>
+		<h3 class="panel-title">Delete student from section</h3>
 	</div>
 	<div class="panel-body">
 		<div class="row">
@@ -32,8 +32,24 @@
 			</div>			
 		</div>
 		<br>
+		<div class="row">
+			<div class="col-md-6">
+				<br>
+				<div class ="addSection-year-feild">
+					Academic Year : <input type="text" class="form-control" placeholder="Academic Year" aria-describedby="basic-addon2" name="year">
+				</div>
+			</div>
+			<div class="col-md-6">
+				<br>
+				<div class ="addSection-semester-feild">
+					Semester : <input type="text" class="form-control" placeholder="Semester" aria-describedby="basic-addon2" name="semester">
+				</div>
+			</div>			
+		</div>
+		<br>
+		<br>
 		<div class ="updateSection-studentId-feild">
-			Id : <input type="text" class="form-control" placeholder="Student id" aria-describedby="basic-addon2" name="std_id">
+			Id : <input type="text" class="form-control" placeholder="Student id" aria-describedby="basic-addon2" name="stu_id">
 		</div>
 		<br>
 		<br>

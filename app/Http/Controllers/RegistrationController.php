@@ -59,7 +59,7 @@ class RegistrationController extends Controller {
 		return redirect('addStudent');
 	}
 
-	public function addTeacherToCourse(){
+	/*public function addTeacherToCourse(){
 		$t_course = Request::input('course_id');
 		$t_sec = Request::input('section');
 		$t_year = 2014;
@@ -70,16 +70,26 @@ class RegistrationController extends Controller {
 		VALUES ('$t_course','$t_sec','$t_year','$t_sem','$t_id')";
 
 		DB::statement($query);	
-	}
+	}*/
 
 	public function editStudentInCourse(){
 		$c_id = Request::input('c_id');
 		$sec = Request::input('sec');
-		$std_id = Request::input('std_id');
+		$stu_id = Request::input('stu_id');
+		$aca_year = Request::input('year');
+		$semester = Request::input('semester');
 
-		$query = "DELETE FROM REGISTRATION where reg_course = $c_id AND reg_sec = $sec AND reg_student = '$std_id'";
+		$exist_student = $this->existStudent($stu_id);
+		$exist_section = $this->existSection($c_id, $sec, $aca_year, $semester);
 
-		DB::statement($query);	
+		if($exist_student == 1 && $exist_section == 1){
+			$query = "DELETE FROM REGISTRATION where reg_course = $c_id AND reg_sec = $sec AND reg_student = '$stu_id'";
+			DB::statement($query);	
+		}
+		else if($exist_student == 0) Session::flash('error-message', 'User '. $stu_id .' is not a student!');
+		else if($exist_section == 0) Session::flash('error-message', 'Section is not in the database!');
+
+		return redirect('updateSection');
 	}
 
 
