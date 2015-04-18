@@ -93,5 +93,4 @@ class CourseController extends Controller {
 		$result = DB::select(DB::raw($query));
 		return View::make('pages.user.courseList')->with('result', $result);
 	}
-
 }

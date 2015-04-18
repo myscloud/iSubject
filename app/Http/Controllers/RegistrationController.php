@@ -2,7 +2,8 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Http\RedirectResponse;
+use Session;
 use Request;
 use DB;
 use Auth;
@@ -40,14 +41,22 @@ class RegistrationController extends Controller {
 	public function addStudentToCourse(){
 		$c_id = Request::input('course_id');
 		$section = Request::input('section');
-		$std_id = Request::input('std_id');
-		$year = 2014;
-		$semester = 2;
+		$stu_id = Request::input('stu_id');
+		$year = Request::input('aca_year');
+		$semester = Request::input('semester');
 
-		$query = "INSERT INTO REGISTRATION (reg_course,reg_sec,reg_year,reg_semester,reg_student)
-		VALUES ('$c_id','$section','$year','$semester','$std_id')";
+		$exist_student = $this->existStudent($stu_id);
+		$exist_section = $this->existSection($c_id, $section, $year, $semester);
+		$exist_registration = $this->existRegistration($stu_id, $c_id, $section, $year, $semester);
 
-		DB::statement($query);
+		if($exist_student == 1 && $exist_section == 1 && $exist_registration == 0){
+			$query = "INSERT INTO REGISTRATION (reg_course,reg_sec,reg_year,reg_semester,reg_student) VALUES ('$c_id','$section','$year','$semester','$stu_id')";
+			DB::statement($query);
+		}
+		else if($exist_student == 0) Session::flash('error-message', 'User '. $stu_id .' is not a student!');
+		else if($exist_section == 0) Session::flash('error-message', 'Section is not in the database!');
+		else if($exist_registration == 1) Session::flash('error-message', 'The registration already exists in the database!');
+		return redirect('addStudent');
 	}
 
 	public function addTeacherToCourse(){
@@ -75,13 +84,23 @@ class RegistrationController extends Controller {
 
 
 
+	//-------------------------validation function-------------------------
+	public function existStudent($user_id){
+		$check_query = "SELECT stu_id FROM STUDENT WHERE stu_id = '$user_id' LIMIT 1";
+		$exist_student = DB::select(DB::raw($check_query));
+		return sizeof($exist_student);
+	}
 
+	public function existSection($course, $secnum, $year, $semester){
+		$check_query = "SELECT * FROM SECTION WHERE course_id_sec = '$course' AND sec_num = '$secnum' AND aca_year = '$year' AND semester = '$semester' LIMIT 1";
+		$exist_section = DB::select(DB::raw($check_query));
+		return sizeof($exist_section);
+	}
 
-
-
-
-
-
-
+	public function existRegistration($stu_id, $course_id, $section, $year, $semester){
+		$check_query = "SELECT * FROM REGISTRATION WHERE reg_course = '$course_id' AND reg_sec = '$section' AND reg_year = '$year' AND reg_semester = '$semester' AND reg_student = '$stu_id' LIMIT 1";
+		$exist_registration = DB::select(DB::raw($check_query));
+		return sizeof($exist_registration);
+	}
 
 }

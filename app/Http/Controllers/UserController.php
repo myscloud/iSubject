@@ -65,13 +65,15 @@ class UserController extends Controller {
 
 	public function addStudent(){
 		$id = Request::input('user_id');
+		$major_id = Request::input('major');
 		$gpax = Request::input('gpax');
 		$advisor_id = Request::input('advisor_id');
 		
-		$exist_user = $this->checkExistUser($id);
-		$valid_advisor = $this->checkTeacher($advisor_id);
+		$exist_user = $this->existUser($id);
+		$valid_advisor = $this->existTeacher($advisor_id);
+		$exist_major = $this->existMajor($major_id);
 
-		if($exist_user == 0 && $valid_advisor == 1){
+		if($exist_user == 0 && $valid_advisor == 1 && $exist_major == 1){
 			$this->addUser(1);
 			$query = "INSERT INTO STUDENT (stu_id, gpax, advisor_id) VALUES ('$id', $gpax, '$advisor_id')";
 			DB::statement($query);
@@ -82,6 +84,9 @@ class UserController extends Controller {
 		else if($valid_advisor == 0){
 			Session::flash('error-message', 'Advisor '. $advisor_id .' is not in the database!');
 		}
+		else if($exist_major == 0){
+			Session::flash('error-message', 'Major '. $major_id .' is not in the database!');
+		}
 		return redirect('addUser');
 	}
 
@@ -90,22 +95,28 @@ class UserController extends Controller {
 		$room = Request::input('room');
 		$position = Request::input('position');
 		$specialize = Request::input('specialize');
+		$major_id = Request::input('major');
 
-		$exist_user = $this->checkExistUser($id);
-		if($exist_user == 0){
+		$exist_user = $this->existUser($id);
+		$exist_major = $this->existMajor($major_id);
+
+		if($exist_user == 0 && $exist_major == 1){
 			$this->addUser(2);
 			$query = "INSERT INTO TEACHER(teacher_id, tea_room, position, specialize) VALUES ('$id', '$room', '$position', '$specialize')";
 			DB::statement($query);
 		}
-		else{
+		else if($exist_user == 1){
 			Session::flash('error-message', 'User '. $id .' already exists in the database!');
+		}
+		else if($exist_major == 0){
+			Session::flash('error-message', 'Major '. $major_id .' is not in the database!');
 		}
 		return redirect('addUser/teacher');
 	}
 
 	public function addAdmin(){
 		$id = Request::input('user_id');
-		$exist_user = $this->checkExistUser($id);
+		$exist_user = $this->existUser($id);
 		if($exist_user == 0){
 			$this->addUser(4);
 		}
@@ -115,10 +126,10 @@ class UserController extends Controller {
 		return redirect('addUser/admin');
 	}
 
-	public function editProfile(){
+	/*public function editProfile(){
 		$user = Auth::input('user_id');
 		$user_id = $user['id'];
-		$exist_user = $this->checkExistUser($user_id);
+		$exist_user = $this->existUser($user_id);
 
 		if($exist_user == 1){
 			$query = "SELECT * FROM USER WHERE id = '$user_id'";
@@ -127,11 +138,11 @@ class UserController extends Controller {
 		else{
 			Session::flash('error-message', 'User '. $id .' already exists in the database!');
 		}
-	}
+	}*/
 
 	public function updateUserStatus(){
 		$user_id = Request::input('user_id');
-		$exist_user = $this->checkExistUser($user_id);
+		$exist_user = $this->existUser($user_id);
 		if($exist_user == 1){
 			$query = "UPDATE USER SET type=3 WHERE id = '$user_id'";
 			DB::statement($query);
@@ -143,17 +154,21 @@ class UserController extends Controller {
 	}
 
 	//---------------------------INTERNAL FUNCTION---------------------------
-	public function checkExistUser($user_id){
+	public function existUser($user_id){
 		$check_query = "SELECT id FROM USER WHERE id = '$user_id' LIMIT 1";
 		$check_result = DB::select(DB::raw($check_query));
-		$exist_user = sizeof($check_result);
-		return $exist_user;
+		return sizeof($check_result);
 	}
 
-	public function checkTeacher($user_id){
+	public function existTeacher($user_id){
 		$check_query = "SELECT teacher_id FROM TEACHER WHERE teacher_id = '$user_id' LIMIT 1";
 		$check_result = DB::select(DB::raw($check_query));
-		$real_teacher = sizeof($check_result);
-		return $real_teacher;
+		return sizeof($check_result);
+	}
+
+	public function existMajor($major_id){
+		$check_query = "SELECT major_id FROM MAJOR WHERE major_id = '$major_id'";
+		$check_result = DB::select(DB::raw($check_query));
+		return sizeof($check_result);
 	}
 }

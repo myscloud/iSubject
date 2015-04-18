@@ -17,8 +17,6 @@
 		<h3 class="panel-title">Add student to course</h3>
 	</div>
 	<div class="panel-body">
-
-
 		<div class="row">
 			<div class="col-md-6">
 				<br>
@@ -37,23 +35,23 @@
 		<div class="row">
 			<div class="col-md-6">
 				<br>
-				<div class ="addStudent-semester-feild">
-					Semester : <input type="text" class="form-control" placeholder="Course id" aria-describedby="basic-addon2" name ="course_id">
+				<div class ="addStudent-year-feild">
+					Academic Year : <input type="text" class="form-control" placeholder="section" aria-describedby="basic-addon2" name = "aca_year">
 				</div>
-			</div>
+			</div>	
 			<div class="col-md-6">
 				<br>
-				<div class ="addStudent-year-feild">
-					Academic Year : <input type="text" class="form-control" placeholder="section" aria-describedby="basic-addon2" name = "section">
+				<div class ="addStudent-semester-feild">
+					Semester : <input type="text" class="form-control" placeholder="Course id" aria-describedby="basic-addon2" name ="semester">
 				</div>
-			</div>			
+			</div>		
 		</div>
 		<br>
 		<div class="row">
 			<div class="col-md-6">
 				<br>
 				<div class ="addStudent-studentId-feild">
-					Id : <input type="text" class="form-control" placeholder="Student id" aria-describedby="basic-addon2" name ="std_id">
+					Id : <input type="text" class="form-control" placeholder="Student id" aria-describedby="basic-addon2" name ="stu_id">
 				</div>
 			</div>
 			<div class="col-md-6">
@@ -64,10 +62,6 @@
 				</div>
 			</div>			
 		</div>
-
-
-
-
 	</div>
 </form>
 
