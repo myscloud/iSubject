@@ -153,6 +153,33 @@ class UserController extends Controller {
 		return redirect('updateStatus');
 	}
 
+	public function showChangePassword(){
+		return View::make('pages.user.password');
+	}
+
+	public function changePassword(){
+		$old_pass = Request::input('old_pass');
+		$new_pass = Request::input('new_pass');
+		$renew_pass = Request::input('renew_pass');
+		$user_id = Auth::user()->id;
+
+		//retrieve old password from database
+		$query = "SELECT password FROM USER WHERE id = '$user_id'";
+		$result = DB::select(DB::raw($query));
+		$real_old_pass = $result[0]->password;
+
+		if(Hash::check($old_pass, $real_old_pass)){
+			if($new_pass == $renew_pass){
+				$hashPassword = Hash::make($new_pass);
+				$query2 = "UPDATE USER SET password='$hashPassword' WHERE id='$user_id'";
+				DB::statement($query2);
+			}
+			else Session::flash('error-message', 'New password and re-new password are mismatch!');
+		}
+		else Session::flash('error-message', 'Wrong old password!');
+		return redirect('profile');
+	}
+
 	//---------------------------INTERNAL FUNCTION---------------------------
 	public function existUser($user_id){
 		$check_query = "SELECT id FROM USER WHERE id = '$user_id' LIMIT 1";

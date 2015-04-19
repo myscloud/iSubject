@@ -9,8 +9,9 @@
 </div>
 @stop
 @section('content')
+@foreach($courseResult as $course)
 <div class="panel-heading">
-	<h3 class="panel-title">รายละเอียดวิชา</h3>
+	<h3 class="panel-title">{{ $course->course_name }}</h3>
 </div>
 <div class="panel-body">
 	
@@ -18,13 +19,17 @@
 		<button class ="btn btn-warning">Favourite</button>
 	</div>
 	<div>
-		<div class ="courseDetail-courseId-feild">รหัสวิชา</div>
-		<div class ="courseDetail-courseName-feild">ชื่อวิชา</div>
-		<div class ="courseDetail-description-feild">Description<a href="{{ URL::to('editDescription') }}">[Edit]</a></div>
+		
+		<div class ="courseDetail-courseId-feild"></div>
+		<div class ="courseDetail-courseName-feild">ชื่อวิชา <br> {{ $course->course_name }}</div>
+		<div class ="courseDetail-description-feild">Description<a href="{{ URL::to('editDescription') }}">[Edit]</a>
+			<br> {{ $course->course_des }}
+		</div>
 		<div class ="courseDetail-comment-feild">Comment <a href="{{ URL::to('viewComment') }}">[All comments]</a><a href="{{ URL::to('viewAlumnusComment') }}">[All alumnus comments]</a></div>
 		
 		<a href="{{ URL::to('addComment') }}"><button type="button" class="btn btn-info">Add comment</button></a>
 		<div class ="courseDetail-occupation-feild">Occupation</div>
+		@if(Auth::user()->type == 1 || Auth::user()->type == 2)
 		<div class ="courseDetail-section-dropdown">
 			<div class="dropdown">
 				<button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
@@ -39,8 +44,9 @@
 				</ul>
 			</div>
 		</div>
+		@endif
 
 	</div>				
 </div>
-
+@endforeach
 @stop

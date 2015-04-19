@@ -53,5 +53,8 @@ Route::post('addUser/teacher', 'UserController@addTeacher');
 Route::post('addUser/admin', 'UserController@addAdmin');
 Route::post('updateStatus','UserController@updateUserStatus');
 Route::post('addEventAdmin', 'EventController@addEventAdmin');
-Route::get('/courseList/all', 'CourseController@showAllRegisteredCourse');
-Route::get('/courseList/fav', 'CourseController@showFavCourse');
+Route::get('courseList/all', 'CourseController@showAllRegisteredCourse');
+Route::get('courseList/fav', 'CourseController@showFavCourse');
+
+Route::get('changePassword', 'UserController@showChangePassword');
+Route::post('changePassword', 'UserController@changePassword');

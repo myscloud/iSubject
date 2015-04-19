@@ -17,61 +17,54 @@
 		<div class="row">
 			<div class="col-md-6"><div class="search-subj">
 				<div class="input-group">
-					<input type="text" class="form-control" placeholder="Search By No.">
-					<span class="input-group-btn">
-						<button class="btn btn-default" type="button">Search
-						</button>
-					</span>
+					<form method="post" action="/searchCourseById">
+						<input name="_token" hidden value="{!! csrf_token() !!}" />
+						<input type="text" class="form-control" placeholder="Search By No." name="course_id">
+						<span class="input-group-btn">
+							<input class="btn btn-default" type="submit" value="Search">
+						</span>
+					</form>
 				</div>
 			</div>	</div>
 			<div class="col-md-6"><div class="search-subj">
 				<div class="input-group">
-					<input type="text" class="form-control" placeholder="Search By Name">
-					<span class="input-group-btn">
-						<button class="btn btn-default" type="button">Search
-						</button>
-					</span>
+					<form method="post" action="/searchCourseByName">
+						<input name="_token" hidden value="{!! csrf_token() !!}" />
+						<input type="text" class="form-control" placeholder="Search By Name" name="course_name">
+						<span class="input-group-btn">
+							<input class="btn btn-default" type="submit">
+						</span>
+					</form>
 				</div>
 			</div>			
 		</div>
 	</div>
 </div>
-
+@if(isset($result))
 <div class ="search-rslt">
 	Search Result
 	<div class="panel-body">
-		<div>
-		<a href="{{ URL::to('courseDetail') }}" >
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title">รหัสวิชา : xxxxxxx&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspวิชา : xxxxxxx</h3>
-					</div>
-					<div class="panel-body">
-						<div>
-							XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-						</div>				
-					</div>
+			@foreach($result as $course)
+			<div>
+				<a href="{{ URL::to('courseDetail') . '/' . $course->course_id }}" >
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">{{ $course->course_id }}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{ $course->course_name }}</h3>
+						</div>
+						<div class="panel-body">
+							<div>
+								{{ $course->course_des }}
+							</div>				
+						</div>
 
-				</div>	
-			</a>
-		</div>
-		<br>	
-		<div>
-		<a href="{{ URL::to('courseDetail') }}" >
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">รหัสวิชา : xxxxxxx&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspวิชา : xxxxxxx</h3>
-				</div>
-				<div class="panel-body">
-					<div>
-						XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-					</div>				
-				</div>
-			</div>	
-			</a>
-		</div>		
+					</div>	
+				</a>
+			</div>
+			@endforeach
+
+		<br>		
 	</div>
-
+@endif
 </div>
 
 @stop

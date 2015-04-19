@@ -22,7 +22,7 @@ class CourseController extends Controller {
 	public function showCourseDetail($course_id){
 		$query = "SELECT * FROM COURSE WHERE course_id = '$course_id' ";
 		$result = DB::select(DB::raw($query));
-		return View::make('pages.user.courseDetail')->with('result', $result);	
+		return View::make('pages.user.courseDetail')->with('courseResult', $result);	
 	}
 
 	public function addCourse(){

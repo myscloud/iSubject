@@ -18,22 +18,24 @@
 
 	
 	<br>
-	<div class ="password-oldPassword-feild">
-		old password : <input type="password" class="form-control" placeholder="Old Password" aria-describedby="basic-addon2">
-	</div>
-	<br>
-	<div class ="password-newPassword-feild">
-		new password : <input type="password" class="form-control" placeholder="New Password" aria-describedby="basic-addon2">
-	</div>
-	<br>
-	<div class ="password-reNewPassword-feild">
-	re-new password : <input type="password" class="form-control" placeholder="New Password" aria-describedby="basic-addon2">
-	</div>
-	<br>
-	<div class ="password-submit">
-		<input type="submit" class="btn btn-success">
-	</div>
-
+	<form method="post" action="changePassword">
+		<input name="_token" hidden value="{!! csrf_token() !!}" />
+		<div class ="password-oldPassword-feild">
+			old password : <input type="password" class="form-control" placeholder="Old Password" aria-describedby="basic-addon2" name="old_pass">
+		</div>
+		<br>
+		<div class ="password-newPassword-feild">
+			new password : <input type="password" class="form-control" placeholder="New Password" aria-describedby="basic-addon2" name="new_pass">
+		</div>
+		<br>
+		<div class ="password-reNewPassword-feild">
+		re-new password : <input type="password" class="form-control" placeholder="New Password" aria-describedby="basic-addon2" name="renew_pass">
+		</div>
+		<br>
+		<div class ="password-submit">
+			<input type="submit" class="btn btn-success">
+		</div>
+	</form>
 
 </div>
 
