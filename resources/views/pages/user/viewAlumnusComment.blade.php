@@ -14,35 +14,24 @@
 	<h3 class="panel-title">Comment</h3>
 </div>
 <div class="panel-body">
-
-	<br>
-	<div>
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h3 class="panel-title">By : XXXXXXX</h3>
-			</div>
-			<div class="panel-body">
-				<div>
-					XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-				</div>				
-			</div>
-			
-		</div>	
-	</div>
-	<br>	
-	<div>
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h3 class="panel-title">By : XXXXXXX</h3>
-			</div>
-			<div class="panel-body">
-				<div>
-					XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-				</div>				
-			</div>
-			
-		</div>	
-	</div>		
+	@foreach($result as $comment)
+		<br>
+		<div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">By : {{ $comment->first_name . ' ' . $comment->last_name }} </h3>
+				</div>
+				<div class="panel-body">
+					<div>
+						{{ $comment->alum_rev_content }}
+						<br><br>
+						posted {{ $comment->alum_rev_time }}
+					</div>				
+				</div>
+				
+			</div>	
+		</div>
+	@endforeach		
 </div>
 
 

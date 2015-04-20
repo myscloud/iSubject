@@ -25,9 +25,14 @@
 		<div class ="courseDetail-description-feild"><h4>Description<a href="{{ URL::to('editDescription') }}">[Edit]</a></h4>
 			<br> {{ $course->course_des }}
 		</div>
-		<div class ="courseDetail-comment-feild"><h4>Comment<a href="{{ URL::to('viewComment') }}">[All comments]</a><a href="{{ URL::to('viewAlumnusComment') }}">[All alumnus comments]</a></h4></div>
+		<div class ="courseDetail-comment-feild"><h4>Comment<a href="{{ URL::to('viewComment') }}">[All comments]</a><a href="{{ URL::to('viewAlumnusComment'). '/' . $course->course_id }}">[All alumnus comments]</a></h4></div>
 		
-		<a href="{{ URL::to('addComment') }}"><button type="button" class="btn btn-info">Add comment</button></a>
+		@if(Auth::user()->type == 1)
+			<a href="{{ URL::to('addComment') }}"><button type="button" class="btn btn-info">Add comment</button></a>
+		@elseif(Auth::user()->type == 3)
+			<a href="{{ URL::to('addCommentAlumnus') . '/' . $course->course_id }}"><button type="button" class="btn btn-info">Add comment</button></a>
+		@endif
+
 		<div class ="courseDetail-occupation-feild"><h4>Occupation</h4></div>
 		@if(Auth::user()->type == 1 || Auth::user()->type == 2)
 		<div class ="courseDetail-section-dropdown">

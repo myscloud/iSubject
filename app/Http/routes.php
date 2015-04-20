@@ -17,6 +17,7 @@ Route::get('search','StudentController@search');
 Route::get('addComment','StudentController@addComment');
 Route::get('viewComment','StudentController@viewComment');
 Route::get('viewAlumnusComment','StudentController@viewAlumnusComment');
+Route::get('viewAlumnusComment/{course_id}', 'CommentController@getAlumnusComment');
 Route::get('courseList','CourseController@showCurrentCourseList');
 Route::get('login', 'AdminController@login');
 Route::get('admin','AdminController@admin');
@@ -61,3 +62,7 @@ Route::post('changePassword', 'UserController@changePassword');
 Route::get('eventDetail', 'EventController@showEvent');
 
 Route::get('sectionDetail/{course_id}/{sec}/{sem}/{year}', 'CourseController@showSectionDetail');
+
+Route::get('alumnusIndex', 'UserController@showAlumnusIndex');
+Route::get('addCommentAlumnus/{course_id}', 'CommentController@alumnusComment');
+Route::post('addAlumnusComment', 'CommentController@addAlumnusComment');

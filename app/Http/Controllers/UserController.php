@@ -180,6 +180,10 @@ class UserController extends Controller {
 		return redirect('profile');
 	}
 
+	public function showAlumnusIndex(){
+		return View::make('pages.user.alumnusIndex');
+	}
+
 	//---------------------------INTERNAL FUNCTION---------------------------
 	public function existUser($user_id){
 		$check_query = "SELECT id FROM USER WHERE id = '$user_id' LIMIT 1";
