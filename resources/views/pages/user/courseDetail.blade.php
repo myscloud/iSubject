@@ -21,14 +21,14 @@
 	<div>
 		
 		<div class ="courseDetail-courseId-feild"></div>
-		<div class ="courseDetail-courseName-feild">ชื่อวิชา <br> {{ $course->course_name }}</div>
-		<div class ="courseDetail-description-feild">Description<a href="{{ URL::to('editDescription') }}">[Edit]</a>
+		<div class ="courseDetail-courseName-feild"><h4>ชื่อวิชา</h4>  {{ $course->course_name }}</div>
+		<div class ="courseDetail-description-feild"><h4>Description<a href="{{ URL::to('editDescription') }}">[Edit]</a></h4>
 			<br> {{ $course->course_des }}
 		</div>
-		<div class ="courseDetail-comment-feild">Comment <a href="{{ URL::to('viewComment') }}">[All comments]</a><a href="{{ URL::to('viewAlumnusComment') }}">[All alumnus comments]</a></div>
+		<div class ="courseDetail-comment-feild"><h4>Comment<a href="{{ URL::to('viewComment') }}">[All comments]</a><a href="{{ URL::to('viewAlumnusComment') }}">[All alumnus comments]</a></h4></div>
 		
 		<a href="{{ URL::to('addComment') }}"><button type="button" class="btn btn-info">Add comment</button></a>
-		<div class ="courseDetail-occupation-feild">Occupation</div>
+		<div class ="courseDetail-occupation-feild"><h4>Occupation</h4></div>
 		@if(Auth::user()->type == 1 || Auth::user()->type == 2)
 		<div class ="courseDetail-section-dropdown">
 			<div class="dropdown">
@@ -37,10 +37,11 @@
 					<span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-					<li role="presentation"><a role="menuitem" tabindex="-1" href="#">1</a></li>
-					<li role="presentation"><a role="menuitem" tabindex="-1" href="#">2</a></li>
-					<li role="presentation"><a role="menuitem" tabindex="-1" href="#">3</a></li>
-					<li role="presentation"><a role="menuitem" tabindex="-1" href="#">4</a></li>
+					@foreach($sections as $sec)
+						<li role="presentation"><a role="menuitem" tabindex="-1" href="/sectionDetail/{{$sec->course_id_sec}}/{{$sec->sec_num}}/{{$sec->semester}}/{{$sec->aca_year}}">
+							{{ $sec->sec_num }}
+						</a></li>
+					@endforeach
 				</ul>
 			</div>
 		</div>

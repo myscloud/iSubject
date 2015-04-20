@@ -211,6 +211,12 @@ a{
 .panel.panel-default.calendar{
 	width:80%;
 }
+.calendarEvent{
+	color :green;
+}
+.calendarHomework{
+	color:red;
+}
 
 /*courseDetail*/
 /*------------------------------------*/
@@ -266,9 +272,20 @@ a{
 }
 
 /*password*/
-/*------------------------------------*/
+/*-------------------------------------*/
 .password-oldPassword-feild,
 .password-newPassword-feild,
 .password-reNewPassword-feild{
 	width: 300px;
+}
+
+/*eventDetail*/
+/*-------------------------------------*/
+.eventDetail-eventName-feild,
+.eventDetail-courseName-feild,
+.eventDetail-sectionNo-feild,
+.eventDetail-startTime-feild,
+.eventDetail-endTime-feild,
+.eventDetail-description-feild{
+	width:300px;
 }

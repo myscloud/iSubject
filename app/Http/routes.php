@@ -58,3 +58,6 @@ Route::get('courseList/fav', 'CourseController@showFavCourse');
 
 Route::get('changePassword', 'UserController@showChangePassword');
 Route::post('changePassword', 'UserController@changePassword');
+Route::get('eventDetail', 'EventController@showEvent');
+
+Route::get('sectionDetail/{course_id}/{sec}/{sem}/{year}', 'CourseController@showSectionDetail');

@@ -19,14 +19,16 @@
 	<div class="row">
 		<div class="col-md-6">
 			<br>
-			<div class ="sectionDetail-courseId-feild">
-				Course Id : 
-			</div>
+			@foreach($course_name as $course)
+				<div class ="sectionDetail-courseId-feild">
+					Course : {{ $course->course_name }}
+				</div>
+			@endforeach
 		</div>
 		<div class="col-md-4">
 			<br>
 			<div class ="sectionDetail-section-feild">
-				Section :
+				Section : {{ $sec }}
 			</div>
 		</div>		
 		<div class="col-md-2">
@@ -39,13 +41,20 @@
 			<br>
 			<div class ="sectionDetail-teacher-feild">
 				Teacher : 
+				<?php $i = 0; ?>
+				@foreach($teachers as $teacher)
+					<?php if($i > 0) echo ',  ';  $i++; ?>
+					{{ $teacher->first_name }} {{ $teacher->last_name }}
+				@endforeach
 			</div>
 		</div>
 		<div class="col-md-6">
 			<br>
-			<div class ="sectionDetail-room-feild">
-				Room :
-			</div>
+			@foreach($room as $c_room)
+				<div class ="sectionDetail-room-feild">
+					Room : {{ $c_room->classroom }}
+				</div>
+			@endforeach
 		</div>			
 	</div>
 	<br>
@@ -53,13 +62,13 @@
 		<div class="col-md-6">
 			<br>
 			<div class ="sectionDetail-semester-feild">
-				Semester : 
+				Semester : {{ $semester }}
 			</div>
 		</div>
 		<div class="col-md-6">
 			<br>
 			<div class ="sectionDetail-year-feild">
-				Academic Year :
+				Academic Year : {{ $year }}
 			</div>
 		</div>			
 	</div>

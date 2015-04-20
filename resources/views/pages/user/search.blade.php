@@ -20,6 +20,7 @@
 					<form method="post" action="/searchCourseById">
 						<input name="_token" hidden value="{!! csrf_token() !!}" />
 						<input type="text" class="form-control" placeholder="Search By No." name="course_id">
+						<br><br>
 						<span class="input-group-btn">
 							<input class="btn btn-default" type="submit" value="Search">
 						</span>
@@ -31,6 +32,7 @@
 					<form method="post" action="/searchCourseByName">
 						<input name="_token" hidden value="{!! csrf_token() !!}" />
 						<input type="text" class="form-control" placeholder="Search By Name" name="course_name">
+						<br><br>
 						<span class="input-group-btn">
 							<input class="btn btn-default" type="submit">
 						</span>

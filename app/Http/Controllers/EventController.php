@@ -41,6 +41,10 @@ class EventController extends Controller {
 		return $event_id;
 	}
 
+	public function showEvent(){
+		return View::make('pages.user.eventDetail');
+	}
+
 	public function addEventAdmin(){
 		$sec_option = Request::input('radioChoose');
 		$choose_sec = Request::input('chooseSec');

@@ -21,7 +21,15 @@
 					<h3 class="panel-title">Date</h3>
 				</div>
 				<div class="panel-body">
-					xxxxxxxxxxxxxxxxxxxx
+
+					<div >
+					<a href="{{ URL::to('eventDetail') }}"class="calendarEvent">[Event]xxxxxxxxxxxxxxxxxxxx</a>
+					<br>
+					</div>
+					<div >
+					<a href="{{ URL::to('eventDetail') }}"class="calendarHomework">[Homework]xxxxxxxxxxxxx</a>
+					<br>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -11,18 +11,25 @@ use Session;
 
 class CourseController extends Controller {
 
-	public function showSection(){
-
-		$s_id = 2;
-		$query = "SELECT * FROM SECTION WHERE course_id_sec = '$s_id' ";
-		$result = DB::select(DB::raw($query));
-		return $result;	
-	}
-
 	public function showCourseDetail($course_id){
 		$query = "SELECT * FROM COURSE WHERE course_id = '$course_id' ";
 		$result = DB::select(DB::raw($query));
-		return View::make('pages.user.courseDetail')->with('courseResult', $result);	
+		$sections = $this->getSectionInCourse($course_id);
+
+		return View::make('pages.user.courseDetail')->with('courseResult', $result)->with('sections', $sections);	
+	}
+
+	public function getSectionInCourse($course_id){
+		$c_month = date('m');
+		$c_year = date('Y');
+		$c_semester = 1;
+		if($c_month < 7){
+			$c_year = $c_year - 1;
+			$c_semester = 2;
+		}
+
+		$query = "SELECT * FROM SECTION WHERE course_id_sec = '$course_id' AND aca_year = '$c_year' AND semester = '$c_semester'";
+		return DB::select(DB::raw($query));
 	}
 
 	public function addCourse(){
@@ -130,6 +137,28 @@ class CourseController extends Controller {
 		$query = "SELECT DISTINCT COURSE.course_id, COURSE.course_name, COURSE.course_des FROM COURSE INNER JOIN FAV_COURSE ON FAV_COURSE.fav_course_id = COURSE.course_id AND FAV_COURSE.student_id = '$user_id'";
 		$result = DB::select(DB::raw($query));
 		return View::make('pages.user.courseList')->with('result', $result)->with('page_type', 'fav');
+	}
+
+	public function showSectionDetail($course_id, $sec, $sem, $year){
+		//retrieve course name
+		$course_query = "SELECT COURSE.course_name FROM COURSE WHERE course_id = '$course_id'";
+		$course_name = DB::select(DB::raw($course_query));
+		
+		$room = $this->getSectionRoom($course_id, $sec, $sem, $year);
+		$teachers = $this->getTeacherInSection($course_id, $sec, $sem, $year);
+
+		return View::make('pages.user.sectionDetail')->with('course_id', $course_id)->with('sec', $sec)->with('semester', $sem)->with('year', $year)->with('course_name', $course_name)->with('teachers', $teachers)->with('room', $room);
+	}
+
+	//-------------------------internal function-------------------------
+	public function getSectionRoom($course_id, $sec, $sem, $year){
+		$query = "SELECT classroom FROM SECTION WHERE course_id_sec = '$course_id' AND sec_num = '$sec' AND aca_year = '$year' AND semester = '$sem'";
+		return DB::select(DB::raw($query));
+	}
+
+	public function getTeacherInSection($course_id, $sec, $sem, $year){
+		$query = "SELECT DISTINCT USER.first_name, USER.last_name FROM USER INNER JOIN TEACHING ON USER.id = TEACHING.teach_teacher_id AND TEACHING.teach_course = '$course_id' AND TEACHING.teach_sec = '$sec' AND TEACHING.teach_year = '$year' AND TEACHING.teach_semester = '$sem'";
+		return DB::select(DB::raw($query));
 	}
 
 	//-------------------------validation function-------------------------
