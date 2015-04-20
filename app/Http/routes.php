@@ -66,3 +66,5 @@ Route::get('sectionDetail/{course_id}/{sec}/{sem}/{year}', 'CourseController@sho
 Route::get('alumnusIndex', 'UserController@showAlumnusIndex');
 Route::get('addCommentAlumnus/{course_id}', 'CommentController@alumnusComment');
 Route::post('addAlumnusComment', 'CommentController@addAlumnusComment');
+Route::get('occupationVote/{course_id}', 'CommentController@showOccupationVote');
+Route::post('occupationVote', 'CommentController@voteOccupation');

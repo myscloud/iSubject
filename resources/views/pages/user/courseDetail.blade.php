@@ -34,6 +34,10 @@
 		@endif
 
 		<div class ="courseDetail-occupation-feild"><h4>Occupation</h4></div>
+		@if(Auth::user()->type == 3)
+			<a href="{{ URL::to('occupationVote') . '/' . $course->course_id }}"><button type="button" class="btn btn-info">Occupation Vote</button></a>
+		@endif
+
 		@if(Auth::user()->type == 1 || Auth::user()->type == 2)
 		<div class ="courseDetail-section-dropdown">
 			<div class="dropdown">
