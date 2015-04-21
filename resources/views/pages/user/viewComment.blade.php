@@ -12,69 +12,69 @@
 @stop
 @section('content')
 
+@foreach($course as $cou)
 <div class="panel-heading">
-	<h3 class="panel-title">Comment</h3>
+	<h3 class="panel-title">Comment on {{ $cou->course_name }}</h3>
 </div>
 <div class="panel-body">
 	<div class ="searchCommentPanel">
 
-
-
-		<div class="row">
-			<div class="col-md-3">
-				<div class ="setionComment-feild">
-					Section : <input type="text" class="form-control" placeholder="Section" aria-describedby="basic-addon2">
+		<form method="post" action="/viewComment/{{ $cou->course_id }}">
+			<input name="_token" hidden value="{!! csrf_token() !!}" />
+			<div class="row">
+				<div class="col-md-3">
+					<div class ="setionComment-feild">
+						Section : <input type="text" class="form-control" placeholder="Section" aria-describedby="basic-addon2" name="section"
+						@if(isset($section)) @if($section!= "NULL") value="{{$section}}" @endif @endif >
+					</div>
 				</div>
+				<div class="col-md-3">
+					<div class ="semesterComment-feild">
+						Semester : <input type="text" class="form-control" placeholder="Semester" aria-describedby="basic-addon2" name="semester"
+						@if(isset($semester)) @if($semester != "NULL") value="{{$semester}}" @endif @endif >
+					</div>
+				</div>	
+				<div class="col-md-3">
+					<div class ="academicYearComment-feild">
+						Year : <input type="text" class="form-control" placeholder="Year" aria-describedby="basic-addon2" name="year"
+						@if(isset($year)) @if($year != "NULL") value="{{$year}}" @endif @endif >
+					</div>
+				</div>
+				<div class="col-md-1">
+					<div class ="searchComment">
+						<br>
+						<input type="submit" class="btn btn-success" value="search">
+					</div>
+				</div>			
+				<div class="col-md-2">
+					
+				</div>	
 			</div>
-			<div class="col-md-3">
-				<div class ="semesterComment-feild">
-					Semester : <input type="text" class="form-control" placeholder="Semester" aria-describedby="basic-addon2">
-				</div>
-			</div>	
-			<div class="col-md-3">
-				<div class ="academicYearComment-feild">
-					Year : <input type="text" class="form-control" placeholder="Year" aria-describedby="basic-addon2">
-				</div>
-			</div>
-			<div class="col-md-1">
-				<div class ="searchComment">
-					<br>
-					<button type="button" class="btn btn-success">search</button>
-				</div>
-			</div>			
-			<div class="col-md-2">
-				
-			</div>	
-		</div>
+		</form>
 	</div>
 
 	<br>
 	<div>
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h3 class="panel-title">By : XXXXXXX</h3>
-			</div>
-			<div class="panel-body">
-				<div>
-					XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-				</div>				
-			</div>
-		</div>	
-	</div>
-	<br>	
-	<div>
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h3 class="panel-title">By : XXXXXXX</h3>
-			</div>
-			<div class="panel-body">
-				<div>
-					XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-				</div>				
-			</div>
-		</div>	
-	</div>		
-</div>
+		@if(sizeof($comment) == 0)
+			ไม่พบความคิดเห็นที่มีเงื่อนไขตรงกับที่ท่านค้นหา
+		@endif
 
+		@foreach($comment as $comm)
+		<div class="panel panel-default">	
+				<div class="panel-heading">
+					<h3 class="panel-title">By : {{$comm->first_name}}  {{$comm->last_name}} on {{$comm->rev_time}}</h3>
+				</div>
+				<div class="panel-body">
+					<div>
+						{{$comm->review_content}}
+					</div>				
+				</div>
+		</div>	
+		@endforeach
+
+	</div>
+	<br>			
+</div>
+@endforeach
 
 @stop

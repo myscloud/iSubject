@@ -14,7 +14,7 @@
 Route::get('/', 'LoginController@index');
 Route::get('courseDetail/{course_id}','CourseController@showCourseDetail');
 Route::get('search','StudentController@search');
-Route::get('addComment','StudentController@addComment');
+Route::get('addComment/{course_id}','CommentController@studentComment');
 Route::get('viewComment','StudentController@viewComment');
 Route::get('viewAlumnusComment','StudentController@viewAlumnusComment');
 Route::get('viewAlumnusComment/{course_id}', 'CommentController@getAlumnusComment');
@@ -68,3 +68,6 @@ Route::get('addCommentAlumnus/{course_id}', 'CommentController@alumnusComment');
 Route::post('addAlumnusComment', 'CommentController@addAlumnusComment');
 Route::get('occupationVote/{course_id}', 'CommentController@showOccupationVote');
 Route::post('occupationVote', 'CommentController@voteOccupation');
+Route::post('addComment', 'CommentController@addStudentComment');
+Route::post('viewComment/{course_id}', 'CommentController@searchComment');
+Route::get('viewComment/{course_id}', 'CommentController@showComment');

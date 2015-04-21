@@ -12,21 +12,6 @@ use Redirect;
 
 class CommentController extends Controller {
 
-	public function showStudentComment(){
-
-		$r_id = 1;
-		$query = "SELECT * FROM STUDENT_REVIEW WHERE review_id = '$r_id' ";
-		$result = DB::select(DB::raw($query));
-		return $result;	
-	}
-
-	public function showAlumnusComment(){
-
-		$al_id = 8;
-		$query = "SELECT * FROM ALUMNUS_REVIEW WHERE alum_rev_id = '$al_id' ";
-		$result = DB::select(DB::raw($query));
-		return $result;	
-	}
 	public function showOccupationVote($course_id){
 		$user_id = Auth::user()->id;
 
@@ -119,4 +104,72 @@ class CommentController extends Controller {
 		return View::make('pages.user.viewAlumnusComment')->with('result', $result);
 	}
 
+	public function StudentComment($course_id){
+		$user_id = Auth::user()->id;
+		$registration = $this->getPassedRegistration($course_id, $user_id);
+		$course_name = $this->getCourseName($course_id);
+
+		return View::make('pages.user.addComment')->with('regis', $registration)->with('course_name', $course_name);
+	}
+
+	public function addStudentComment(){
+		$course_id = Request::input('course_id');
+		$section = Request::input('section');
+		$semester = Request::input('semester');
+		$year = Request::input('aca_year');
+		$user_id = Auth::user()->id;
+		$review = Request::input('review');
+
+		$pdo = DB::connection()->getPdo();
+		$query = $pdo->prepare("INSERT INTO STUDENT_REVIEW (rev_course, rev_sec, rev_sec_year, rev_sec_sem, rev_student, review_content, rev_time) VALUES ('$course_id', '$section', '$year', '$semester', '$user_id', :rv, now())");
+		$query->bindParam(':rv', $review);
+		$query->execute();
+
+
+	}
+
+	public function getPassedRegistration($course_id, $user_id){
+		$c_month = date('m');
+		$c_year = date('Y');
+		$c_semester = 1;
+		if($c_month < 7){
+			$c_year = $c_year - 1;
+			$c_semester = 2;
+		}
+
+		$query = "SELECT * FROM REGISTRATION WHERE reg_course = '$course_id' AND reg_student = '$user_id' AND (reg_year != '$c_year' OR reg_semester != '$c_semester') LIMIT 1";
+		return DB::select(DB::raw($query));
+	}
+
+	public function getCourseName($course_id){
+		$query = "SELECT course_name FROM COURSE WHERE course_id = '$course_id'";
+		return DB::select(DB::raw($query));
+	}
+
+	public function searchComment($course_id){
+		$section = Request::input('section');
+		$year = Request::input('year');
+		$semester = Request::input('semester');
+
+		if($section == '') $section = 'NULL';
+		if($year == '') $year = 'NULL';
+		if($semester == '') $semester = 'NULL';
+
+		$query = "SELECT DISTINCT USER.first_name, USER.last_name, STUDENT_REVIEW.review_content, STUDENT_REVIEW.rev_time FROM STUDENT_REVIEW INNER JOIN USER WHERE rev_student = USER.id AND rev_sec = IFNULL($section, rev_sec) AND rev_sec_year = IFNULL($year, rev_sec_year) AND rev_sec_sem = IFNULL($semester, rev_sec_sem) ORDER BY rev_time DESC";
+		$result = DB::select(DB::raw($query));
+
+		//just for using course name
+		$course_query = "SELECT course_id, course_name FROM COURSE WHERE course_id = '$course_id'";
+		$course = DB::select(DB::raw($course_query));
+		return View::make('pages.user.viewComment')->with('comment', $result)->with('course', $course)->with('section', $section)->with('year', $year)->with('semester', $semester);
+	}
+
+	public function showComment($course_id){
+		$query = "SELECT course_id, course_name FROM COURSE WHERE course_id = '$course_id'";
+		$result = DB::select(DB::raw($query));
+
+		$query_comment = "SELECT DISTINCT USER.first_name, USER.last_name, STUDENT_REVIEW.review_content, STUDENT_REVIEW.rev_time FROM STUDENT_REVIEW INNER JOIN USER WHERE rev_student = USER.id ORDER BY rev_time DESC";
+		$comment = DB::select(DB::raw($query_comment));
+		return View::make('pages.user.viewComment')->with('course', $result)->with('comment', $comment);
+	}
 }

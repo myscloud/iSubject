@@ -16,8 +16,9 @@ class CourseController extends Controller {
 		$result = DB::select(DB::raw($query));
 		$occupation_vote = $this->showOccupationVoteResult($course_id);
 		$sections = $this->getSectionInCourse($course_id);
+		$comm_perm = $this->commentPermission($course_id, Auth::user()->id);
 
-		return View::make('pages.user.courseDetail')->with('courseResult', $result)->with('sections', $sections)->with('occ_vote', $occupation_vote);	
+		return View::make('pages.user.courseDetail')->with('courseResult', $result)->with('sections', $sections)->with('occ_vote', $occupation_vote)->with('comm_perm', $comm_perm);	
 	}
 
 	public function getSectionInCourse($course_id){
@@ -166,6 +167,25 @@ class CourseController extends Controller {
 		$query = "SELECT occ_name, COUNT(voter_id) AS vote_count FROM OCCUPATION INNER JOIN OCCUPATION_VOTE ON occ_id = vote_occ_id AND vote_course_id = '$course_id' GROUP BY vote_occ_id ORDER BY vote_count DESC";
 		$result = DB::select(DB::raw($query));
 		return $result;
+	}
+
+	public function commentPermission($course_id, $user_id){
+		$c_month = date('m');
+		$c_year = date('Y');
+		$c_semester = 1;
+		if($c_month < 7){
+			$c_year = $c_year - 1;
+			$c_semester = 2;
+		}
+
+		$query = "SELECT * FROM REGISTRATION WHERE reg_course = '$course_id' AND reg_student = '$user_id' AND (reg_year != '$c_year' OR reg_semester != '$c_semester') LIMIT 1";
+		$regis = sizeof(DB::select(DB::raw($query)));
+
+		$query2 = "SELECT review_id FROM STUDENT_REVIEW WHERE rev_course = '$course_id' AND rev_student = '$user_id'";
+		$cm = sizeof(DB::select(DB::raw($query2)));
+
+		if($regis == 1 && $cm == 0) return 1;
+		else return 0;
 	}
 
 	//-------------------------validation function-------------------------
