@@ -3,7 +3,9 @@
 <div class="list-group">
 	<a href="{{ URL::to('profile') }}" class="list-group-item">Profile</a>
 	<a href="{{ URL::to('search') }}" class="list-group-item">Search</a>
-	<a href="{{ URL::to('calendar') }}" class="list-group-item">Calendar</a>
+	@if(Auth::user()->type == 1 || Auth::user()->type == 2)	
+		<a href="{{ URL::to('calendar') }}" class="list-group-item">Calendar</a>
+	@endif
 	<a href="{{ URL::to('courseList') }}" class="list-group-item">Courselist</a>
 	
 </div>
@@ -34,9 +36,14 @@
 		@endif
 
 		<div class ="courseDetail-occupation-feild"><h4>Occupation</h4></div>
+		@foreach($occ_vote as $vote)
+			<div>{{ $vote->occ_name }}  จำนวนคนโหวต  {{ $vote->vote_count }} คน <br><br></div>
+		@endforeach
+
 		@if(Auth::user()->type == 3)
 			<a href="{{ URL::to('occupationVote') . '/' . $course->course_id }}"><button type="button" class="btn btn-info">Occupation Vote</button></a>
 		@endif
+
 
 		@if(Auth::user()->type == 1 || Auth::user()->type == 2)
 		<div class ="courseDetail-section-dropdown">

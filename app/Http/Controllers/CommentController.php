@@ -61,14 +61,18 @@ class CommentController extends Controller {
 			$check_occ_new[$i] = $check_occ_old[$i] = 0;
 		}
 		//create check_occ array for last vote result
-		foreach ($occupation as $key => $value) {
-			$check_occ_new[$value] = 1;
+		if($occupation != null){
+			foreach ($occupation as $key => $value) {
+				$check_occ_new[$value] = 1;
+			}
 		}
 		//create check_occ array for old vote result
 		$query2 = "SELECT vote_occ_id FROM OCCUPATION_VOTE WHERE vote_course_id = '$course_id' AND voter_id = '$user_id'";
 		$old_vote = DB::select(DB::raw($query2));
-		foreach ($old_vote as $key => $vote) {
-			$check_occ_old[$vote->vote_occ_id] = 1;
+		if($old_vote != null){
+			foreach ($old_vote as $key => $vote) {
+				$check_occ_old[$vote->vote_occ_id] = 1;
+			}
 		}
 
 		for($i=0; $i <= $occ_size; $i++){

@@ -3,7 +3,9 @@
 <div class="list-group">
 	<a href="{{ URL::to('profile') }}" class="list-group-item">Profile</a>
 	<a href="{{ URL::to('search') }}" class="list-group-item">Search</a>
-	<a href="{{ URL::to('calendar') }}" class="list-group-item">Calendar</a>
+	@if(Auth::user()->type == 1 || Auth::user()->type == 2)	
+		<a href="{{ URL::to('calendar') }}" class="list-group-item">Calendar</a>
+	@endif
 	<a href="{{ URL::to('courseList') }}" class="list-group-item">Courselist</a>
 	
 </div>

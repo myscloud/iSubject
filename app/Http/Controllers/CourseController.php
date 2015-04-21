@@ -14,9 +14,10 @@ class CourseController extends Controller {
 	public function showCourseDetail($course_id){
 		$query = "SELECT * FROM COURSE WHERE course_id = '$course_id' ";
 		$result = DB::select(DB::raw($query));
+		$occupation_vote = $this->showOccupationVoteResult($course_id);
 		$sections = $this->getSectionInCourse($course_id);
 
-		return View::make('pages.user.courseDetail')->with('courseResult', $result)->with('sections', $sections);	
+		return View::make('pages.user.courseDetail')->with('courseResult', $result)->with('sections', $sections)->with('occ_vote', $occupation_vote);	
 	}
 
 	public function getSectionInCourse($course_id){
@@ -159,6 +160,12 @@ class CourseController extends Controller {
 	public function getTeacherInSection($course_id, $sec, $sem, $year){
 		$query = "SELECT DISTINCT USER.first_name, USER.last_name FROM USER INNER JOIN TEACHING ON USER.id = TEACHING.teach_teacher_id AND TEACHING.teach_course = '$course_id' AND TEACHING.teach_sec = '$sec' AND TEACHING.teach_year = '$year' AND TEACHING.teach_semester = '$sem'";
 		return DB::select(DB::raw($query));
+	}
+
+	public function showOccupationVoteResult($course_id){
+		$query = "SELECT occ_name, COUNT(voter_id) AS vote_count FROM OCCUPATION INNER JOIN OCCUPATION_VOTE ON occ_id = vote_occ_id AND vote_course_id = '$course_id' GROUP BY vote_occ_id ORDER BY vote_count DESC";
+		$result = DB::select(DB::raw($query));
+		return $result;
 	}
 
 	//-------------------------validation function-------------------------
