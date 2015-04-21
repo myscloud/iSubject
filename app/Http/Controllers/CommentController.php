@@ -155,7 +155,7 @@ class CommentController extends Controller {
 		if($year == '') $year = 'NULL';
 		if($semester == '') $semester = 'NULL';
 
-		$query = "SELECT DISTINCT USER.first_name, USER.last_name, STUDENT_REVIEW.review_content, STUDENT_REVIEW.rev_time FROM STUDENT_REVIEW INNER JOIN USER WHERE rev_student = USER.id AND rev_sec = IFNULL($section, rev_sec) AND rev_sec_year = IFNULL($year, rev_sec_year) AND rev_sec_sem = IFNULL($semester, rev_sec_sem) ORDER BY rev_time DESC";
+		$query = "SELECT DISTINCT USER.first_name, USER.last_name, STUDENT_REVIEW.review_content, STUDENT_REVIEW.rev_time FROM STUDENT_REVIEW INNER JOIN USER WHERE rev_student = USER.id AND rev_course = '$course_id' AND rev_sec = IFNULL($section, rev_sec) AND rev_sec_year = IFNULL($year, rev_sec_year) AND rev_sec_sem = IFNULL($semester, rev_sec_sem) ORDER BY rev_time DESC";
 		$result = DB::select(DB::raw($query));
 
 		//just for using course name
@@ -168,7 +168,7 @@ class CommentController extends Controller {
 		$query = "SELECT course_id, course_name FROM COURSE WHERE course_id = '$course_id'";
 		$result = DB::select(DB::raw($query));
 
-		$query_comment = "SELECT DISTINCT USER.first_name, USER.last_name, STUDENT_REVIEW.review_content, STUDENT_REVIEW.rev_time FROM STUDENT_REVIEW INNER JOIN USER WHERE rev_student = USER.id ORDER BY rev_time DESC";
+		$query_comment = "SELECT DISTINCT USER.first_name, USER.last_name, STUDENT_REVIEW.review_content, STUDENT_REVIEW.rev_time FROM STUDENT_REVIEW INNER JOIN USER WHERE rev_student = USER.id AND rev_course = '$course_id' ORDER BY rev_time DESC";
 		$comment = DB::select(DB::raw($query_comment));
 		return View::make('pages.user.viewComment')->with('course', $result)->with('comment', $comment);
 	}
