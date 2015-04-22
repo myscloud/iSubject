@@ -17,9 +17,21 @@
 </div>
 <div class="panel-body">
 	
-	<div class ="courseDetail-favorite-button">
-		<button class ="btn btn-warning">Favourite</button>
-	</div>
+	@if(Auth::user()->type == 1)
+		@if($is_fav == 0)
+			<div class ="courseDetail-favorite-button">
+				<a href = "/favourite/{{$course->course_id}}">
+					<button class ="btn btn-warning">Add to Favourite</button>
+				</a>
+			</div>
+		@elseif($is_fav == 1)
+			<div class ="courseDetail-favorite-button">
+				<a href = "/favourite/{{$course->course_id}}">
+					<button class ="btn btn-danger">Favourite</button>
+				</a>
+			</div>
+		@endif
+	@endif
 	<div>
 		
 		<div class ="courseDetail-courseId-feild"></div>

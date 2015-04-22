@@ -45,7 +45,7 @@ Route::post('addUser','UserController@addUser');
 Route::get('addEvent','AdminController@addEvent');
 Route::get('addEventU','StudentController@addEvent');
 Route::get('sectionDetail','StudentController@sectionDetail');
-Route::get('calendar', 'EventController@showCalendar');
+Route::get('calendar', 'EventController@showCurrentCalendar');
 
 Route::get('addUser/{user_type}', 'UserController@addUserByType');
 Route::get('updateStatus','AdminController@updateStatus');
@@ -62,6 +62,7 @@ Route::post('changePassword', 'UserController@changePassword');
 Route::get('eventDetail', 'EventController@showEvent');
 
 Route::get('sectionDetail/{course_id}/{sec}/{sem}/{year}', 'CourseController@showSectionDetail');
+Route::get('addEvent/{course_id}/{sec}/{sem}/{year}', 'EventController@showAddEvent');
 
 Route::get('alumnusIndex', 'UserController@showAlumnusIndex');
 Route::get('addCommentAlumnus/{course_id}', 'CommentController@alumnusComment');
@@ -74,3 +75,10 @@ Route::get('viewComment/{course_id}', 'CommentController@showComment');
 
 Route::get('editDescription/{course_id}','CourseController@showEditDescription');
 Route::post('editDescription', 'CourseController@updateDescription');
+Route::post('addUserEvent', 'EventController@addUserEvent');
+Route::get('eventDetail/{event_id}', 'EventController@showEventDetail');
+Route::get('calendar/{year}/{month}', 'EventController@showCalendar');
+Route::get('favourite/{course_id}', 'CourseController@favourite');
+Route::get('editEvent/{event_id}', 'EventController@showEditEvent');
+Route::post('editEvent', 'EventController@editEvent');
+Route::post('deleteEvent', 'EventController@deleteEvent');

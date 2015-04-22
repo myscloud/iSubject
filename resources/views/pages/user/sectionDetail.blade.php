@@ -82,40 +82,45 @@
 				<div class="col-md-10">
 					<h3 class="panel-title">Event</h3>
 				</div>
-				<div class="col-md-2">
-					<a href = "{{ URL::to('addEventU') }}"><button class ="btn btn-info">Add Events</button></a>
-				</div>			
+				@if($perm == 1)
+					<div class="col-md-2">
+						<a href = "{{ URL::to('addEvent').'/'.$course_id.'/'.$sec.'/'.$semester.'/'.$year }}"><button class ="btn btn-info">Add Events</button></a>
+					</div>			
+				@endif
 			</div>
 
 		</div>
 		<div class="panel-body">
-			<div>
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title">ชื่อ : </h3>
-					</div>
-					<div class="panel-body">
-						<div>
-							detail
-						</div>				
-					</div>
+			@foreach($events as $event)
+				<a href="/eventDetail/{{$event->event_id}}">
+					<div>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title"> {{$event->event_name}} </h3>
+							</div>
+							<div class="panel-body">
+								<div>
+									{{ $event->description }}
+								</div>
+								<br>
+								<div>
+									@if(date('Y-m-d', strtotime($event->start_time)) == date('Y-m-d', strtotime($event->end_time)) && $event->isHomework == 0)
+										{{date('l, j F Y', strtotime($event->start_time)) }}
+										{{ date('H:i', strtotime($event->start_time)) }} -  {{ date('H:i', strtotime($event->end_time)) }}
+									@elseif($event->isHomework == 0)
+										{{date('l, j F Y, H:i', strtotime($event->start_time)) }} - 
+										{{date('l, j F Y, H:i', strtotime($event->end_time)) }}
+									@elseif($event->isHomework == 1)
+										Due date: {{date('l, j F Y, H:i', strtotime($event->start_time)) }}
+									@endif
+								</div>				
+							</div>
 
-				</div>	
-			</div>
-			<br>	
-			<div>
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title">ชื่อ : </h3>
+						</div>	
 					</div>
-					<div class="panel-body">
-						<div>
-							detail
-						</div>				
-					</div>
-
-				</div>	
-			</div>		
+				</a>
+				<br>	
+			@endforeach
 		</div>
 	</div>
 </div>

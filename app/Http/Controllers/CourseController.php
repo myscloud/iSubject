@@ -20,8 +20,9 @@ class CourseController extends Controller {
 		$edit_perm = $this->editPermission($course_id);
 		$stu_rev = $this->latestStudentReview($course_id);
 		$alum_rev = $this->latestAlumnusReview($course_id);
+		$is_fav = $this->isFavourite(Auth::user()->id, $course_id);
 
-		return View::make('pages.user.courseDetail')->with('courseResult', $result)->with('sections', $sections)->with('occ_vote', $occupation_vote)->with('comm_perm', $comm_perm)->with('edit_perm', $edit_perm)->with('stu_rev', $stu_rev)->with('alum_rev', $alum_rev);	
+		return View::make('pages.user.courseDetail')->with('courseResult', $result)->with('sections', $sections)->with('occ_vote', $occupation_vote)->with('comm_perm', $comm_perm)->with('edit_perm', $edit_perm)->with('stu_rev', $stu_rev)->with('alum_rev', $alum_rev)->with('is_fav', $is_fav);	
 	}
 
 	public function getSectionInCourse($course_id){
@@ -162,8 +163,21 @@ class CourseController extends Controller {
 		
 		$room = $this->getSectionRoom($course_id, $sec, $sem, $year);
 		$teachers = $this->getTeacherInSection($course_id, $sec, $sem, $year);
+		$perm = $this->addEventPermission($course_id, $sec, $sem, $year, Auth::user()->id);
+		$event = $this->getEventInSection($course_id, $sec, $sem, $year);
 
-		return View::make('pages.user.sectionDetail')->with('course_id', $course_id)->with('sec', $sec)->with('semester', $sem)->with('year', $year)->with('course_name', $course_name)->with('teachers', $teachers)->with('room', $room);
+		return View::make('pages.user.sectionDetail')->with('course_id', $course_id)->with('sec', $sec)->with('semester', $sem)->with('year', $year)->with('course_name', $course_name)->with('teachers', $teachers)->with('room', $room)->with('perm', $perm)->with('events', $event);
+	}
+
+	public function favourite($course_id){
+		$user_id = Auth::user()->id;
+		$is_fav = $this->isFavourite($user_id, $course_id);
+		if($is_fav == 0)
+			$query = "INSERT INTO FAV_COURSE (student_id, fav_course_id) VALUES ('$user_id', '$course_id')";
+		else
+			$query = "DELETE FROM FAV_COURSE WHERE student_id = '$user_id' AND fav_course_id = '$course_id'";
+		DB::statement($query);
+		return redirect('courseDetail/'.$course_id);
 	}
 
 	//-------------------------internal function-------------------------
@@ -208,6 +222,11 @@ class CourseController extends Controller {
 		return sizeof(DB::select(DB::raw($query)));
 	}
 
+	public function addEventPermission($course_id, $section, $semester, $year, $user_id){
+		$query = "SELECT * FROM TEACHING WHERE teach_course = '$course_id' AND teach_sec = '$section' AND teach_semester = '$semester' AND teach_year = '$year' AND teach_teacher_id = '$user_id' LIMIT 1";
+		return sizeof(DB::select(DB::raw($query)));
+	}
+
 	public function showEditDescription($course_id){
 		$query = "SELECT * FROM COURSE WHERE course_id = '$course_id'";
 		$result = DB::select(DB::raw($query));
@@ -233,6 +252,17 @@ class CourseController extends Controller {
 		$query = "SELECT USER.first_name, USER.last_name, ALUMNUS_REVIEW.alum_rev_content, ALUMNUS_REVIEW.alum_rev_time FROM ALUMNUS_REVIEW INNER JOIN USER ON ALUMNUS_REVIEW.rev_alum = USER.id ORDER BY alum_rev_time DESC LIMIT 1";
 		$result = DB::select(DB::raw($query));
 		return $result;
+	}
+
+	public function getEventInSection($course_id, $section, $semester, $year){
+		$query = "SELECT EVENT.* FROM EVENT INNER JOIN SECTION_EVENT ON EVENT.event_id = SECTION_EVENT.event_id AND SECTION_EVENT.event_course = '$course_id' AND SECTION_EVENT.event_sec = '$section' AND SECTION_EVENT.event_aca_year = '$year' AND SECTION_EVENT.event_semester = '$semester' ORDER BY start_time ASC";
+		return DB::select(DB::raw($query));
+	}
+
+	public function isFavourite($user_id, $course_id){
+		$query = "SELECT * FROM FAV_COURSE WHERE student_id = '$user_id' AND fav_course_id = '$course_id' LIMIT 1";
+		$result = DB::select(DB::raw($query));
+		return sizeof($result);
 	}
 
 	//-------------------------validation function-------------------------
