@@ -289,3 +289,14 @@ a{
 .eventDetail-description-feild{
 	width:300px;
 }
+
+/*editDescription*/
+/*-------------------------------------*/
+.editDescription-textArea-field{
+	width :600px;
+	height:200px;
+	border-radius:5px ;
+}
+.editDescription-submit-button{
+
+}

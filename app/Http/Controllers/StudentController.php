@@ -41,4 +41,7 @@ class StudentController extends Controller {
 	public function addEvent(){
 		return view('pages.user.addEvent');
 	}
+	public function editDescription(){
+		return view('pages.user.editDescription');
+	}
 }

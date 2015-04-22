@@ -71,3 +71,6 @@ Route::post('occupationVote', 'CommentController@voteOccupation');
 Route::post('addComment', 'CommentController@addStudentComment');
 Route::post('viewComment/{course_id}', 'CommentController@searchComment');
 Route::get('viewComment/{course_id}', 'CommentController@showComment');
+
+Route::get('editDescription/{course_id}','CourseController@showEditDescription');
+Route::post('editDescription', 'CourseController@updateDescription');

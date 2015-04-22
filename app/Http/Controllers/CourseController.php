@@ -17,8 +17,11 @@ class CourseController extends Controller {
 		$occupation_vote = $this->showOccupationVoteResult($course_id);
 		$sections = $this->getSectionInCourse($course_id);
 		$comm_perm = $this->commentPermission($course_id, Auth::user()->id);
+		$edit_perm = $this->editPermission($course_id);
+		$stu_rev = $this->latestStudentReview($course_id);
+		$alum_rev = $this->latestAlumnusReview($course_id);
 
-		return View::make('pages.user.courseDetail')->with('courseResult', $result)->with('sections', $sections)->with('occ_vote', $occupation_vote)->with('comm_perm', $comm_perm);	
+		return View::make('pages.user.courseDetail')->with('courseResult', $result)->with('sections', $sections)->with('occ_vote', $occupation_vote)->with('comm_perm', $comm_perm)->with('edit_perm', $edit_perm)->with('stu_rev', $stu_rev)->with('alum_rev', $alum_rev);	
 	}
 
 	public function getSectionInCourse($course_id){
@@ -122,14 +125,25 @@ class CourseController extends Controller {
 		}
 		
 		$user_id = Auth::user()->id;
-		$query = "SELECT DISTINCT COURSE.course_id, COURSE.course_name, COURSE.course_des FROM COURSE INNER JOIN REGISTRATION ON REGISTRATION.reg_course = COURSE.course_id AND REGISTRATION.reg_year = $c_year AND REGISTRATION.reg_semester = $c_semester AND REGISTRATION.reg_student = '$user_id'";
+		$query = "";
+		if(Auth::user()->type == 1){
+			$query = "SELECT DISTINCT COURSE.course_id, COURSE.course_name, COURSE.course_des FROM COURSE INNER JOIN REGISTRATION ON REGISTRATION.reg_course = COURSE.course_id AND REGISTRATION.reg_year = $c_year AND REGISTRATION.reg_semester = $c_semester AND REGISTRATION.reg_student = '$user_id'";
+		}
+		else if(Auth::user()->type == 2){
+			$query = "SELECT DISTINCT COURSE.course_id, COURSE.course_name, COURSE.course_des FROM COURSE INNER JOIN TEACHING ON TEACHING.teach_course = COURSE.course_id AND TEACHING.teach_year = '$c_year' AND TEACHING.teach_semester = '$c_semester' AND TEACHING.teach_teacher_id = '$user_id'";
+		}
 		$result = DB::select(DB::raw($query));
 		return View::make('pages.user.courseList')->with('result', $result)->with('page_type', 'current');
 	}
 
 	public function showAllRegisteredCourse(){
 		$user_id = Auth::user()->id;
-		$query = "SELECT DISTINCT COURSE.course_id, COURSE.course_name, COURSE.course_des FROM COURSE INNER JOIN REGISTRATION ON REGISTRATION.reg_course = COURSE.course_id AND REGISTRATION.reg_student = '$user_id'";
+		if(Auth::user()->type == 1){
+			$query = "SELECT DISTINCT COURSE.course_id, COURSE.course_name, COURSE.course_des FROM COURSE INNER JOIN REGISTRATION ON REGISTRATION.reg_course = COURSE.course_id AND REGISTRATION.reg_student = '$user_id'";
+		}
+		else if(Auth::user()->type == 2){
+			$query = "SELECT DISTINCT COURSE.course_id, COURSE.course_name, COURSE.course_des FROM COURSE INNER JOIN TEACHING ON TEACHING.teach_course = COURSE.course_id AND TEACHING.teach_teacher_id = '$user_id'";
+		}
 		$result = DB::select(DB::raw($query));
 		return View::make('pages.user.courseList')->with('result', $result)->with('page_type', 'all');
 	}
@@ -186,6 +200,39 @@ class CourseController extends Controller {
 
 		if($regis == 1 && $cm == 0) return 1;
 		else return 0;
+	}
+
+	public function editPermission($course_id){
+		$user_id = Auth::user()->id;
+		$query = "SELECT * FROM TEACHING WHERE teach_course = '$course_id' AND teach_teacher_id = '$user_id'";
+		return sizeof(DB::select(DB::raw($query)));
+	}
+
+	public function showEditDescription($course_id){
+		$query = "SELECT * FROM COURSE WHERE course_id = '$course_id'";
+		$result = DB::select(DB::raw($query));
+		$edit_perm = $this->editPermission($course_id);
+		return View::make('pages.user.editDescription')->with('comment', $result)->with('perm', $edit_perm);
+	}
+
+	public function updateDescription(){
+		$course_id = Request::input('course_id');
+		$comment = Request::input('comment');
+		$query = "UPDATE COURSE SET course_des = '$comment' WHERE course_id = '$course_id'";
+		DB::statement($query);
+		return redirect('courseDetail' . '/' . $course_id);
+	}
+
+	public function latestStudentReview($course_id){
+		$query = "SELECT USER.first_name, USER.last_name, STUDENT_REVIEW.review_content, STUDENT_REVIEW.rev_time FROM STUDENT_REVIEW INNER JOIN USER ON STUDENT_REVIEW.rev_student = USER.id ORDER BY rev_time DESC LIMIT 1";
+		$result = DB::select(DB::raw($query));
+		return $result;
+	}
+
+	public function latestAlumnusReview($course_id){
+		$query = "SELECT USER.first_name, USER.last_name, ALUMNUS_REVIEW.alum_rev_content, ALUMNUS_REVIEW.alum_rev_time FROM ALUMNUS_REVIEW INNER JOIN USER ON ALUMNUS_REVIEW.rev_alum = USER.id ORDER BY alum_rev_time DESC LIMIT 1";
+		$result = DB::select(DB::raw($query));
+		return $result;
 	}
 
 	//-------------------------validation function-------------------------
